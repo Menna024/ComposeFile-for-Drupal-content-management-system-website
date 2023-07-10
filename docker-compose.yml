@@ -1,0 +1,37 @@
+version: '3.1'
+
+services:
+ db:
+  image: postgres:10
+  container_name: db-container
+  ports:
+   - '5432:5432'
+  environment:
+   POSTGRES_PASSWORD: 'postgres'
+   POSTGRES_DB: 'postgres'
+   POSTGRES_USER: 'postgres'
+  volumes:
+   - db:/var/lib/postgresql/data
+  restart: always 
+
+ drupal:
+  build: .
+  image: drupal-image
+  container_name: drupal-container
+  ports:
+   - "8080:80"
+  volumes:
+   - modules:/var/www/html/modules
+   - profiles:/var/www/html/profiles
+   - themes:/var/www/html/themes
+   - sites:/var/www/html/sites
+  restart: always 
+
+volumes:
+ modules:
+ profiles:
+ themes:
+ sites:
+ db:
+
+   
